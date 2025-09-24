@@ -1,0 +1,33 @@
+{
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^(vite|@vitejs)(/(.*))?$",
+    "^(react|react-dom)(/(.*))?$",
+    "^react-router(/(.*))?$",
+    "^react-error-boundary(/(.*))?$",
+    "^(immer|use-immer)(/(.*))?$",
+    "^@tanstack(/(.*))?$",
+    "^@dnd-kit(/(.*))?$",
+    "^react-toastify(/(.*))?$",
+    "^clsx(/(.*))?$",
+    "<THIRD_PARTY_MODULES>",
+    "^@/api",
+    "^@/components",
+    "^@/context",
+    "^@/dto",
+    "^@/hooks",
+    "^@/icons",
+    "^@/pages",
+    "^@/providers",
+    "^@/reducers",
+    "^@/stores",
+    "^@/types",
+    "^@/utils",
+    "^@/styles",
+    "^(\\.|\\.\\.)/(.(?!.css))*$",
+    "\\.css$"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderGroupNamespaceSpecifiers": true
+}
