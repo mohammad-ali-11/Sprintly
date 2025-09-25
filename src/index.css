@@ -1,0 +1,36 @@
+*,
+*::after
+*::before{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html{
+  font-family: 'vazirmatn',system-ui,  sans-serif,serif;
+}
+input,
+select,
+label,
+textarea,
+button,
+fieldset,
+legend,
+optgroup,
+output,
+option,
+datalist{
+  font: inherit;
+}
+
+body{
+  background-color: var(--color-surface-1);
+  margin-inline: auto;
+  inline-size:min(75rem,100%-2rem);
+  font-size: var(--fz-400);
+}
+a{
+  color: var(--color-primary);
+  &:hover{
+    color: var(--color-primary-dark);
+  }
+}
