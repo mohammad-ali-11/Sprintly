@@ -5,7 +5,9 @@ import Button from "@/components/Button/Button";
 
 import styles from "./HomePage.module.css";
 
+
 export default function HomePage(): ReactNode {
+
   return (
     <div className={styles["home-page"]}>
       <div className={styles.header}>

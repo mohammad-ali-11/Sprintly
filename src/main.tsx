@@ -1,16 +1,22 @@
 import { createRoot } from "react-dom/client";
 
+import { BrowserRouter } from "react-router";
+
+import { ErrorBoundary } from "react-error-boundary";
+
 import App from "./App.tsx";
 
 import "./index.css";
-import "./styles/shapes.css"
-import "./styles/shadows.css"
-import "./styles/colors.css"
-import "./styles/typography.css"
-import { BrowserRouter } from "react-router";
+import "./styles/colors.css";
+import "./styles/shadows.css";
+import "./styles/shapes.css";
+import "./styles/typography.css";
+import ErrorPage from "./pages/ErrorPage/ErrorPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
-<BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <ErrorBoundary fallback={<ErrorPage/}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ErrorBoundary>,
 );
