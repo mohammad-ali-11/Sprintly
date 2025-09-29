@@ -6,8 +6,7 @@
   padding: 0;
 }
 html{
-  font-family: 'vazirmatn',system-ui,  sans-serif,serif;
-}
+font-family: "Vazirmatn", sans-serif;}
 input,
 select,
 label,
@@ -24,13 +23,19 @@ datalist{
 
 body{
   background-color: var(--color-surface-1);
+  color: var(--color-text);
   margin-inline: auto;
-  inline-size:min(75rem,100%-2rem);
+ 
   font-size: var(--fz-400);
+}
+ul {
+  list-style: none;
 }
 a{
   color: var(--color-primary);
+  
   &:hover{
     color: var(--color-primary-dark);
+    
   }
 }

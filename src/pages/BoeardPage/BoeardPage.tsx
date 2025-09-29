@@ -1,11 +1,5 @@
 import type { ReactNode } from "react";
-import { useParams } from "react-router";
 
-export default function BoeardPage():ReactNode {
-    const {id}=useParams()
-    return(
-        <div>Board page {id}
-            
-        </div>
-    )
+export default function BoeardPage(): ReactNode {
+  return <div>Board page </div>;
 }

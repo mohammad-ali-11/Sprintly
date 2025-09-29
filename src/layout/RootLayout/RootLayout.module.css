@@ -1,5 +1,6 @@
 .root-layout{
     display: grid;
-    grid-template-rows: auto 1fr auto;
-    min-block-size: 100vh;
+     grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+  block-size: 100dvh;
 }
