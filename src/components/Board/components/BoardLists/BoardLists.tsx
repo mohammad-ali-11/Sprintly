@@ -1,21 +1,13 @@
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useState } from "react";
 
-import IconButton from "@/components/IconButton/IconButton";
 import List from "@/components/list/list";
 
-import MingcuteAddLine from "@/icons/MingcuteAddLine";
-import MingcuteEdit2Line from "@/icons/MingcuteEdit2Line";
-
 import type { ListType } from "@/types/list";
-import type { ListItemType } from "@/types/list.item";
 
 import styles from "./BoardLists.module.css";
 
-function cb(a: ListItemType, b: ListItemType): number {
-  return a.title.localeCompare(b.title);
-}
 export default function BoardLists(): ReactNode {
-  const [todoList] = useState<ListType>({
+  const [todoList, setTodoList] = useState<ListType>({
     id: "1",
     title: "🔜 To Do",
     items: [
@@ -47,40 +39,35 @@ export default function BoardLists(): ReactNode {
       },
     ],
   });
-  const SortToDoList = useMemo(() => {
-    return { ...todoList, items: [...todoList.items.sort(cb)] };
-  }, [todoList]);
-  const SortDoingList = useMemo(() => {
-    return { ...doingList, items: [...doingList.items.sort(cb)] };
-  }, [doingList]);
-  const result = useMemo(() => {
-    return (todoList.items.length * 2 * 5)
-  }, [todoList.items.length]);
-  console.log(result);
+  // const handeldeleteItemClick=()=>{
+  //   setTodoList(...todoList)
+  //   const clone={...todoList,items:[...todoList,todoList.id]}
+  //   console.log(clone);
 
-  const [counter, setCounter] = useState(0);
+  // }
+  // const handelListItemClick=useMemo(()=>{
+  //  return (id:string)=>{
+  // setTodoList((old)=>{
+  //   const clone=[...old.items]
+  //   return {...old,items:clone.filter((item)=>item.id!=id)}
+  // })
+  // }
+  // },[])
+  const handelListItemClick = useCallback((id: string) => {
+    setTodoList((old) => {
+      const clone = [...old.items];
+      return { ...old, items: clone.filter((item) => item.id != id) };
+    });
+  }, []);
+
   return (
-    <>
-      <div className={styles["board-toolbar"]}>
-        <div className={styles.title}>titel</div>
-        <div className={styles.actions}>
-          <IconButton>
-            <MingcuteEdit2Line />
-          </IconButton>
-          <IconButton>
-            <MingcuteAddLine onClick={() => setCounter((old) => old + 1)} />
-          </IconButton>
-        </div>
-      </div>
-
-      <ul className={styles["board-lists"]}>
-        <li>
-          <List list={SortToDoList} />
-        </li>
-        <li>
-          <List list={SortDoingList} />
-        </li>
-      </ul>
-    </>
+    <ul className={styles["board-lists"]}>
+      <li>
+        <List list={todoList} onclick={handelListItemClick} />
+      </li>
+      <li>
+        <List list={doingList} onclick={handelListItemClick} />
+      </li>
+    </ul>
   );
 }
