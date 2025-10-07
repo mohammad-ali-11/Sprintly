@@ -1,32 +1,37 @@
-import type { ListType } from '@/types/list'
-import styles from './list.module.css'
-import { memo, type ReactNode } from 'react'
-import IconButton from '../IconButton/IconButton'
-import MingcuteMore1Line from '@/icons/MingcuteMore1Line'
-import ListItem from '../ListItem/ListItem'
-type props={
-    list:ListType
-    onclick?:(id:string)=>void
-}
-const List=memo(function List({list,onclick}:props):ReactNode {
-  console.log(list.title,'list');
-  
-    return <div className={styles.list}>
-         <div className={styles.header}>
-            <div className={styles.title}>{list.title}</div>
-            <IconButton>
-              <MingcuteMore1Line />
-            </IconButton>
-          </div>
-          <ul className={styles.items}>
-            {
-                list.items.map((item)=>(
-                <li key={item.id}><ListItem item={item} onclick={onclick}/></li>
-           
-                ))
-            }
-          
-          </ul>
+import { type ReactNode, memo } from "react";
+
+import MingcuteMore1Line from "@/icons/MingcuteMore1Line";
+
+import type { ListType } from "@/types/list";
+
+import IconButton from "../IconButton/IconButton";
+import ListItem from "../ListItem/ListItem";
+
+import styles from "./list.module.css";
+
+type props = {
+  list: ListType;
+  onclick?: (listId: string, ItemId: string) => void;
+};
+const List = memo(function List({ list, onclick }: props): ReactNode {
+  console.log(list.title, "list");
+
+  return (
+    <div className={styles.list}>
+      <div className={styles.header}>
+        <div className={styles.title}>{list.title}</div>
+        <IconButton>
+          <MingcuteMore1Line />
+        </IconButton>
+      </div>
+      <ul className={styles.items}>
+        {list.items.map((item) => (
+          <li key={item.id}>
+            <ListItem item={item} listId={list.id} onclick={onclick} />
+          </li>
+        ))}
+      </ul>
     </div>
-})
-export default List
+  );
+});
+export default List;

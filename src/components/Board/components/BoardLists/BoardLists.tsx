@@ -1,33 +1,122 @@
 import { type ReactNode, useCallback, useState } from "react";
 
+import Button from "@/components/Button/Button";
+import IconButton from "@/components/IconButton/IconButton";
 import List from "@/components/list/list";
+
+import { listData } from "@/data/list-data";
+
+import MingcuteAddLine from "@/icons/MingcuteAddLine";
+import MingcuteEdit2Line from "@/icons/MingcuteEdit2Line";
 
 import type { ListType } from "@/types/list";
 
 import styles from "./BoardLists.module.css";
-import { listData } from "@/data/list-data";
 
 export default function BoardLists(): ReactNode {
-  const [list,setList]=useState<ListType[]>(listData)
- 
-  const handelListItemClick = useCallback((id: string):void => {
-    setList((old) => {
-      const clone={ ...old[0], items:[...old[0].items].filter((item) => item.id != id) };
-      return [clone,old[1],old[2]]
-    });
-  }, []);
+  const [activeListId, setActiveListId] = useState<string | null>(null);
+  const [activeItemId, setActiveItemId] = useState<string | null>(null);
+  const [list, setList] = useState<ListType[]>(listData);
+
+  const handelListItemClick = useCallback(
+    (listId: string, ItemId: string): void => {
+      setActiveListId(listId);
+      setActiveItemId(ItemId);
+    },
+    [],
+  );
+  const handelRemveButtonClick = (): void => {
+    try {
+      setList((old) => {
+        const activeListIndex = old.findIndex(
+          (list) => list.id === activeListId,
+        );
+        if (activeListIndex === -1) {
+          console.error("cannot find desired list");
+          return old;
+        }
+        const clone = [...old];
+        const activeList = { ...clone[activeListIndex],items:[...clone[activeListIndex].items] };
+
+        const activeItemIndex = activeList.items.findIndex(
+          (item) => item.id === activeItemId,
+        );
+        if (activeItemIndex === -1) {
+          console.error("cannot find desired Item");
+          return old;
+        }
+        activeList.items.splice(activeItemIndex, 1);
+        clone[activeListIndex] = activeList;
+        return clone;
+      });
+    } finally {
+      setActiveListId(null);
+      setActiveItemId(null);
+    }
+  };
+   const handelMoveButtonClick = (destinationlistId:string): void => {
+    try {
+      setList((old) => {
+        const activeListIndex = old.findIndex(
+          (list) => list.id === activeListId,
+        );
+        const destinationListIndex = old.findIndex(
+          (list) => list.id === destinationlistId,
+        );
+        if (activeListIndex === -1||destinationListIndex===-1) {
+          console.error("cannot find desired list");
+          return old;
+        }
+        const clone = [...old];
+        const activeList = { ...clone[activeListIndex],items:[...clone[activeListIndex].items] };
+        const destinationList = { ...clone[destinationListIndex],items:[...clone[destinationListIndex].items] };
+
+        const activeItemIndex = activeList.items.findIndex(
+          (item) => item.id === activeItemId,
+        );
+        if (activeItemIndex === -1) {
+          console.error("cannot find desired Item");
+          return old;
+        }
+        const [activesItem]=activeList.items.splice(activeItemIndex, 1);
+        destinationList.items.push(activesItem)
+        clone[activeListIndex] = activeList;
+        clone[destinationListIndex]=destinationList
+        return clone;
+      });
+    } finally {
+      setActiveListId(null);
+      setActiveItemId(null);
+    }
+  };
 
   return (
-    <ul className={styles["board-lists"]}>
-      <li>
-        <List list={list[0]} onclick={handelListItemClick} />
-      </li>
-      <li>
-        <List list={list[1]} onclick={handelListItemClick} />
-      </li>
-       <li>
-        <List list={list[2]} onclick={handelListItemClick} />
-      </li>
-    </ul>
+    <>
+      <div className={styles["board-toolbar"]}>
+        <div className={styles.title}>titel</div>
+        <div className={styles.actions}>
+          <div className={styles.spacer}>
+            {activeListId !== null &&
+              list
+                .filter((list) => list.id !== activeListId)
+                .map((list) => <Button key={list.id} onClick={()=>handelMoveButtonClick(list.id)}>{list?.title}</Button>)}
+            <Button onClick={handelRemveButtonClick}>remove</Button>
+          </div>
+          <IconButton>
+            <MingcuteEdit2Line />
+          </IconButton>
+          <IconButton>
+            <MingcuteAddLine />
+          </IconButton>
+        </div>
+      </div>
+      <ul className={styles["board-lists"]}>
+        {list.map((item) => (
+          <li key={item?.id}>
+            <List list={item} onclick={handelListItemClick} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
