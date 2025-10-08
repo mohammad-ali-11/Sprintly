@@ -1,4 +1,4 @@
-import { type ReactNode, memo, useMemo } from "react";
+import type { ReactNode } from "react";
 
 import MingcuteMore1Line from "@/icons/MingcuteMore1Line";
 
@@ -13,14 +13,13 @@ type props = {
   list: ListType;
   onclick?: (listId: string, ItemId: string) => void;
 };
-const List = memo(function List({ list, onclick }: props): ReactNode {
-const moreIcon=useMemo(()=><MingcuteMore1Line />,[])
+export default function List({ list, onclick }: props): ReactNode {
   return (
     <div className={styles.list}>
       <div className={styles.header}>
         <div className={styles.title}>{list.title}</div>
         <IconButton>
-          {moreIcon}
+          <MingcuteMore1Line />
         </IconButton>
       </div>
       <ul className={styles.items}>
@@ -32,5 +31,4 @@ const moreIcon=useMemo(()=><MingcuteMore1Line />,[])
       </ul>
     </div>
   );
-});
-export default List;
+}

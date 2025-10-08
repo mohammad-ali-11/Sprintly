@@ -1,15 +1,19 @@
+import type{ComponentProps,ReactNode} from "react";
+
 import clsx from "clsx";
-import { memo, type ComponentProps, type ReactNode } from "react";
-import styles from './IconButton.module.css'
 
-type props = ComponentProps<'button'>
+import styles from "./IconButton.module.css";
 
-const IconButton=memo( function IconButton({children,className,...otherProps}:props):ReactNode {
-    return(
-        <button {...otherProps}  className={clsx(styles["icon-button"],className)}>
-            {children}
-        </button>
-    )
+type props = ComponentProps<"button">;
 
-})
-export default IconButton
+export default function IconButton({
+  children,
+  className,
+  ...otherProps
+}: props): ReactNode {
+  return (
+    <button {...otherProps} className={clsx(styles["icon-button"], className)}>
+      {children}
+    </button>
+  );
+}

@@ -1,10 +1,4 @@
-import {
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 import Button from "@/components/Button/Button";
 import IconButton from "@/components/IconButton/IconButton";
@@ -37,29 +31,26 @@ export default function BoardLists(): ReactNode {
   useEffect(() => {
     save(list);
   }, [list]);
-  const handelListItemClick = useCallback(
-    (listId: string, ItemId: string): void => {
-      setActiveListId(listId);
-      setActiveItemId(ItemId);
-    },
-    [],
-  );
+  const handelListItemClick = (listId: string, ItemId: string): void => {
+    setActiveListId(listId);
+    setActiveItemId(ItemId);
+  };
   useEffect(() => {
-    const handelDocumentKeydown=(e:KeyboardEvent)=>{
-       console.log('ee');
+    const handelDocumentKeydown = (e: KeyboardEvent) => {
+      console.log("ee");
       if (e.code !== "Escape") {
-       return
+        return;
       }
-       setActiveListId(null);
-        setActiveItemId(null);
-    }
+      setActiveListId(null);
+      setActiveItemId(null);
+    };
     document.addEventListener("keydown", handelDocumentKeydown);
-    return ():void=>{
+    return (): void => {
       document.removeEventListener("keydown", handelDocumentKeydown);
-    }
+    };
   }, []);
 
-  const handelRemveButtonClick = useCallback((): void => {
+  const handelRemveButtonClick = (): void => {
     try {
       setList((old) => {
         const activeListIndex = old.findIndex(
@@ -93,9 +84,9 @@ export default function BoardLists(): ReactNode {
       setActiveListId(null);
       setActiveItemId(null);
     }
-  }, [activeItemId, activeListId]);
+  };
 
-  const handelAddButtonclick = useCallback(() => {
+  const handelAddButtonclick = (): void => {
     setList((old) => {
       const clone = [...old];
       const id = globalThis.crypto.randomUUID();
@@ -104,57 +95,50 @@ export default function BoardLists(): ReactNode {
 
       return clone;
     });
-  }, []);
+  };
 
-  const handelMoveButtonClick = useCallback(
-    (destinationlistId: string): void => {
-      try {
-        setList((old) => {
-          const activeListIndex = old.findIndex(
-            (list) => list.id === activeListId,
-          );
-          const destinationListIndex = old.findIndex(
-            (list) => list.id === destinationlistId,
-          );
-          if (activeListIndex === -1 || destinationListIndex === -1) {
-            console.error("cannot find desired list");
-            return old;
-          }
-          const clone = [...old];
-          const activeList = {
-            ...clone[activeListIndex],
-            items: [...clone[activeListIndex].items],
-          };
-          const destinationList = {
-            ...clone[destinationListIndex],
-            items: [...clone[destinationListIndex].items],
-          };
+  const handelMoveButtonClick = (destinationlistId: string): void => {
+    try {
+      setList((old) => {
+        const activeListIndex = old.findIndex(
+          (list) => list.id === activeListId,
+        );
+        const destinationListIndex = old.findIndex(
+          (list) => list.id === destinationlistId,
+        );
+        if (activeListIndex === -1 || destinationListIndex === -1) {
+          console.error("cannot find desired list");
+          return old;
+        }
+        const clone = [...old];
+        const activeList = {
+          ...clone[activeListIndex],
+          items: [...clone[activeListIndex].items],
+        };
+        const destinationList = {
+          ...clone[destinationListIndex],
+          items: [...clone[destinationListIndex].items],
+        };
 
-          const activeItemIndex = activeList.items.findIndex(
-            (item) => item.id === activeItemId,
-          );
-          if (activeItemIndex === -1) {
-            console.error("cannot find desired Item");
-            return old;
-          }
-          const [activesItem] = activeList.items.splice(activeItemIndex, 1);
-          destinationList.items.push(activesItem);
-          clone[activeListIndex] = activeList;
-          clone[destinationListIndex] = destinationList;
+        const activeItemIndex = activeList.items.findIndex(
+          (item) => item.id === activeItemId,
+        );
+        if (activeItemIndex === -1) {
+          console.error("cannot find desired Item");
+          return old;
+        }
+        const [activesItem] = activeList.items.splice(activeItemIndex, 1);
+        destinationList.items.push(activesItem);
+        clone[activeListIndex] = activeList;
+        clone[destinationListIndex] = destinationList;
 
-          return clone;
-        });
-      } finally {
-        setActiveListId(null);
-        setActiveItemId(null);
-      }
-    },
-    [activeItemId, activeListId],
-  );
-
-  const editIcon = useMemo(() => <MingcuteEdit2Line />, []);
-  const addIcon = useMemo(() => <MingcuteAddLine />, []);
-
+        return clone;
+      });
+    } finally {
+      setActiveListId(null);
+      setActiveItemId(null);
+    }
+  };
   return (
     <>
       <div className={styles["board-toolbar"]}>
@@ -174,8 +158,12 @@ export default function BoardLists(): ReactNode {
                 ))}
             <Button onClick={handelRemveButtonClick}>remove</Button>
           </div>
-          <IconButton>{editIcon}</IconButton>
-          <IconButton onClick={handelAddButtonclick}>{addIcon}</IconButton>
+          <IconButton>
+            <MingcuteEdit2Line />
+          </IconButton>
+          <IconButton onClick={handelAddButtonclick}>
+            <MingcuteAddLine />
+          </IconButton>
         </div>
       </div>
       <ul className={styles["board-lists"]}>
