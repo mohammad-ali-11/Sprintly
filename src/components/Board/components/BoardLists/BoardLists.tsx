@@ -45,15 +45,18 @@ export default function BoardLists(): ReactNode {
     [],
   );
   useEffect(() => {
-    document.addEventListener("keydown", (e) => {
-   
-      console.log('ee');
+    const handelDocumentKeydown=(e:KeyboardEvent)=>{
+       console.log('ee');
       if (e.code !== "Escape") {
        return
       }
        setActiveListId(null);
         setActiveItemId(null);
-    });
+    }
+    document.addEventListener("keydown", handelDocumentKeydown);
+    return ():void=>{
+      document.removeEventListener("keydown", handelDocumentKeydown);
+    }
   }, []);
 
   const handelRemveButtonClick = useCallback((): void => {
