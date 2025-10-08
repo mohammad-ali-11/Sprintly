@@ -14,7 +14,6 @@ type props = {
   onclick?: (listId: string, ItemId: string) => void;
 };
 const List = memo(function List({ list, onclick }: props): ReactNode {
-  console.log(list.title, "list");
 const moreIcon=useMemo(()=><MingcuteMore1Line />,[])
   return (
     <div className={styles.list}>
