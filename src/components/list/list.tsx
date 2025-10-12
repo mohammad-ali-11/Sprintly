@@ -11,10 +11,8 @@ import styles from "./list.module.css";
 
 type props = {
   list: ListType;
-  onclick?: (listId: string, ItemId: string) => void;
-  
 };
-export default function List({ list, onclick }: props): ReactNode {
+export default function List({ list }: props): ReactNode {
   return (
     <div className={styles.list}>
       <div className={styles.header}>
@@ -26,7 +24,7 @@ export default function List({ list, onclick }: props): ReactNode {
       <ul className={styles.items}>
         {list.items.map((item) => (
           <li key={item.id}>
-            <ListItem item={item} listId={list.id} onclick={onclick}/>
+            <ListItem item={item} listId={list.id} />
           </li>
         ))}
       </ul>

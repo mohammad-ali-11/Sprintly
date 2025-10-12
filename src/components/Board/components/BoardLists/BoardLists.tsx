@@ -1,4 +1,4 @@
-import { type ReactNode, use, useEffect, useState } from "react";
+import { type ReactNode, use } from "react";
 
 import { BoardContext } from "@/contect/board-context";
 
@@ -10,40 +10,20 @@ import MingcuteAddLine from "@/icons/MingcuteAddLine";
 import MingcuteEdit2Line from "@/icons/MingcuteEdit2Line";
 
 import styles from "./BoardLists.module.css";
+import { ActiveItemContext } from "@/contect/active-item-context";
 
 export default function BoardLists(): ReactNode {
-  const [activeListId, setActiveListId] = useState<string | null>(null);
-  const [activeItemId, setActiveItemId] = useState<string | null>(null);
+
   const { list, create, move } = use(BoardContext);
-
-  const handelListItemClick = (listId: string, ItemId: string): void => {
-    setActiveListId(listId);
-    setActiveItemId(ItemId);
-  };
-
+  const {activeListId,activeItemId,deactive}=use(ActiveItemContext )
+  
   const handelMoveButtonClick = (tolistId: string): void => {
     if (activeListId && activeItemId) {
       move(activeListId, activeItemId, tolistId);
     }
-    setActiveListId(null);
-    setActiveItemId(null);
+    deactive()
+   
   };
-
-  useEffect(() => {
-    const handelDocumentKeydown = (e: KeyboardEvent): void => {
-      console.log("ee");
-      if (e.code !== "Escape") {
-        return;
-      }
-      setActiveListId(null);
-      setActiveItemId(null);
-    };
-    document.addEventListener("keydown", handelDocumentKeydown);
-    return (): void => {
-      document.removeEventListener("keydown", handelDocumentKeydown);
-    };
-  }, []);
-
   return (
     <>
       <div className={styles["board-toolbar"]}>
@@ -75,7 +55,6 @@ export default function BoardLists(): ReactNode {
           <li key={item?.id}>
             <List
               list={item}
-              onclick={handelListItemClick}
             />
           </li>
         ))}
