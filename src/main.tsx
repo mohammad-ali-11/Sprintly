@@ -13,12 +13,14 @@ import "./styles/colors.css";
 import "./styles/shadows.css";
 import "./styles/shapes.css";
 import "./styles/typography.css";
+import Toaster from "./components/Toaster/Toaster.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary fallback={<ErrorPage />}>
       <BrowserRouter>
         <App />
+       <Toaster/>
       </BrowserRouter>
     </ErrorBoundary>
   </StrictMode>,

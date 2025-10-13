@@ -1,21 +1,28 @@
-import styles from './Board.module.css'
-import BoardLists from "./components/BoardLists/BoardLists";
-import {  type ReactNode } from "react";
-import BoardProviders from '@/prividers/BoardProviders';
-import ActiveItemProvider from '@/prividers/ActiveItemProviders';
-export default function Board(): ReactNode {
+import { useRef, type ReactNode } from "react";
 
+import ActiveItemProvider from "@/prividers/ActiveItemProviders";
+import BoardProviders from "@/prividers/BoardProviders";
+
+import BoardLists from "./components/BoardLists/BoardLists";
+
+import styles from "./Board.module.css";
+import Modal from "../Modal/Modal";
+
+export default function Board(): ReactNode {
+  const ref = useRef<HTMLDialogElement>(null);
+  const handelOpenButtonClick = (): void => {
+    ref.current?.showModal();
+  };
   return (
-    <div className={styles.board}>
-      <BoardProviders>
-        <ActiveItemProvider>
+    <BoardProviders>
+      <ActiveItemProvider>
+        <div className={styles.board}>
+          <button onClick={handelOpenButtonClick}>open</button>
           {/* <BoardToolbar /> */}
-           <BoardLists  />
-        </ActiveItemProvider>
-      </BoardProviders>
-   
-     
-   
-    </div>
+          {/* <BoardLists /> */}
+          <Modal ref={ref} heading="this is frist modal">This is children</Modal>
+        </div>
+      </ActiveItemProvider>
+    </BoardProviders>
   );
 }
