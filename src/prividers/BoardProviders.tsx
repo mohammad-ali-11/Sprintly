@@ -12,6 +12,7 @@ import { listData } from "@/data/list-data";
 
 import type { ListType } from "@/types/list";
 import ListReducer from "@/reducers/list-reducer";
+import type { ListItemType } from "@/types/list.item";
 
 type props = PropsWithChildren;
 
@@ -35,11 +36,11 @@ export default function BoardProviders({ children }: props): ReactNode {
     save(list);
   }, [list]);
 
-  const create = (): void => {
+  const create = (listId: string, item: ListItemType): void => {
     // setList((old) => {
     
     // });
-    dispatch({type:'created'})
+    dispatch({type:'created',listId,item})
   };
   const move = (fromlistId: string, ItemId: string, tolistId: string): void => {
     // setList((old) => {

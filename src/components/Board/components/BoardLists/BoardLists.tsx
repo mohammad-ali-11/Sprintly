@@ -15,12 +15,9 @@ import { toast } from "react-toastify";
 
 export default function BoardLists(): ReactNode {
 
-  const { list, create, move } = use(BoardContext);
+  const { list    , move } = use(BoardContext);
   const {activeListId,activeItemId,deactive}=use(ActiveItemContext )
-  const handleCreateItemClick=():void=>{
-create()
-toast.success('Iteam create succeddfully')
-  }
+ 
   const handelMoveButtonClick = (tolistId: string): void => {
     if (activeListId && activeItemId) {
       move(activeListId, activeItemId, tolistId);
@@ -49,7 +46,7 @@ toast.success('Iteam create succeddfully')
           <IconButton>
             <MingcuteEdit2Line />
           </IconButton>
-          <IconButton onClick={handleCreateItemClick }>
+          <IconButton >
             <MingcuteAddLine />
           </IconButton>
         </div>

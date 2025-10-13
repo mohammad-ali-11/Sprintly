@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 
 import MingcuteMore1Line from "@/icons/MingcuteMore1Line";
 
@@ -8,18 +8,32 @@ import IconButton from "../IconButton/IconButton";
 import ListItem from "../ListItem/ListItem";
 
 import styles from "./list.module.css";
+import CreateListItemModal from "../CreateListItemModal/CreateListItemModal";
+import MingcuteAddLine from "@/icons/MingcuteAddLine";
 
 type props = {
   list: ListType;
 };
 export default function List({ list }: props): ReactNode {
+    const ref = useRef<HTMLDialogElement>(null);
+
+    const handelOpenButtonClick = (): void => {
+      ref.current?.showModal();
+    };
+
   return (
     <div className={styles.list}>
       <div className={styles.header}>
         <div className={styles.title}>{list.title}</div>
-        <IconButton>
+        <div className={styles.actions}>
+          <IconButton onClick={handelOpenButtonClick }>
+          <MingcuteAddLine  />
+        </IconButton>
+         <IconButton>
           <MingcuteMore1Line />
         </IconButton>
+        </div>
+       
       </div>
       <ul className={styles.items}>
         {list.items.map((item) => (
@@ -28,6 +42,7 @@ export default function List({ list }: props): ReactNode {
           </li>
         ))}
       </ul>
+      <CreateListItemModal ref={ref} listId={list.id} />
     </div>
   );
 }
