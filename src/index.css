@@ -6,6 +6,8 @@
   padding: 0;
 }
 html{
+  caret-color: var(--color-primary);
+  accent-color: var(--color-primary);
 font-family: "Vazirmatn", sans-serif;}
 input,
 select,

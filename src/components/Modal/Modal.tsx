@@ -1,4 +1,4 @@
-import { type ComponentProps, type MouseEvent, type ReactNode, useRef } from "react";
+import { type ComponentProps, type MouseEvent, type ReactNode, type RefObject, useRef } from "react";
 
 import clsx from "clsx";
 
@@ -10,32 +10,36 @@ import styles from "./Modal.module.css";
 
 type props = ComponentProps<"dialog"> & {
   heading: string;
+  ref: RefObject<HTMLDialogElement | null>;
+  contentClassName?:string
 };
 export default function Modal({
   className,
+  contentClassName,
   children,
+  ref,
   heading,
    onClick,
   ...otherProps
 }: props): ReactNode {
-  const ref = useRef<HTMLDialogElement>(null);
+  // const ref = useRef<HTMLDialogElement>(null);
+  // console.log(ref,'ll');
+  
   const handelclickDialog=(e:MouseEvent<HTMLDialogElement>):void=>{
-    console.log(e.target);
-    console.log(e.currentTarget);
-    
-    
  if (e.target===e.currentTarget) {
-   ref.current?.close();
+   ref?.current?.close();
+   
+   
  }
  onClick?.(e)
   }
   
   const handelCloseButtonClick = (): void => {
     ref.current?.close();
+   
   };
   return (
-    <>
-      
+    
       <dialog
         ref={ref}
         onClick={handelclickDialog}
@@ -50,8 +54,8 @@ export default function Modal({
             </IconButton>
           </div>
         </header>
-        <main>{children}</main>
+        <main className={contentClassName}>{children}</main>
       </dialog>
-    </>
+  
   );
 }

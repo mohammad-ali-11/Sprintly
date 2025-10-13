@@ -5,7 +5,7 @@ import styles from "./TextInput.module.css";
 type props = ComponentProps<"input"> & {
   label: string;
 };
-export default function Modal({
+export default function TextInput({
   className,
   label,
   ...otherProps
