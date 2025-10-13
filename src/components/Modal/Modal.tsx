@@ -1,4 +1,4 @@
-import { type ComponentProps, type ReactNode, useRef } from "react";
+import { type ComponentProps, type MouseEvent, type ReactNode, useRef } from "react";
 
 import clsx from "clsx";
 
@@ -15,9 +15,20 @@ export default function Modal({
   className,
   children,
   heading,
+   onClick,
   ...otherProps
 }: props): ReactNode {
   const ref = useRef<HTMLDialogElement>(null);
+  const handelclickDialog=(e:MouseEvent<HTMLDialogElement>):void=>{
+    console.log(e.target);
+    console.log(e.currentTarget);
+    
+    
+ if (e.target===e.currentTarget) {
+   ref.current?.close();
+ }
+ onClick?.(e)
+  }
   
   const handelCloseButtonClick = (): void => {
     ref.current?.close();
@@ -27,6 +38,7 @@ export default function Modal({
       
       <dialog
         ref={ref}
+        onClick={handelclickDialog}
         className={clsx(styles.modal, className)}
         {...otherProps}
       >
