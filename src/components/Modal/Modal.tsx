@@ -1,4 +1,10 @@
-import { type ComponentProps, type MouseEvent, type ReactNode, type RefObject, useRef } from "react";
+import {
+  type ComponentProps,
+  type MouseEvent,
+  type ReactNode,
+  type RefObject,
+  useRef,
+} from "react";
 
 import clsx from "clsx";
 
@@ -11,7 +17,7 @@ import styles from "./Modal.module.css";
 type props = ComponentProps<"dialog"> & {
   heading: string;
   ref: RefObject<HTMLDialogElement | null>;
-  contentClassName?:string
+  contentClassName?: string;
 };
 export default function Modal({
   className,
@@ -19,43 +25,36 @@ export default function Modal({
   children,
   ref,
   heading,
-   onClick,
+  onClick,
   ...otherProps
 }: props): ReactNode {
-  // const ref = useRef<HTMLDialogElement>(null);
-  // console.log(ref,'ll');
-  
-  const handelclickDialog=(e:MouseEvent<HTMLDialogElement>):void=>{
- if (e.target===e.currentTarget) {
-   ref?.current?.close();
-   
-   
- }
- onClick?.(e)
-  }
-  
+  const handelclickDialog = (e: MouseEvent<HTMLDialogElement>): void => {
+    if (e.target === e.currentTarget) {
+      ref?.current?.close();
+    } else {
+      onClick?.(e);
+    }
+  };
+
   const handelCloseButtonClick = (): void => {
     ref.current?.close();
-   
   };
   return (
-    
-      <dialog
-        ref={ref}
-        onClick={handelclickDialog}
-        className={clsx(styles.modal, className)}
-        {...otherProps}
-      >
-        <header>
-          <div className={styles.header}>{heading} </div>
-          <div className={styles.actions}>
-            <IconButton onClick={handelCloseButtonClick}>
-              <MingcuteCloseLine />
-            </IconButton>
-          </div>
-        </header>
-        <main className={contentClassName}>{children}</main>
-      </dialog>
-  
+    <dialog
+      ref={ref}
+      onClick={handelclickDialog}
+      className={clsx(styles.modal, className)}
+      {...otherProps}
+    >
+      <header>
+        <div className={styles.header}>{heading} </div>
+        <div className={styles.actions}>
+          <IconButton onClick={handelCloseButtonClick}>
+            <MingcuteCloseLine />
+          </IconButton>
+        </div>
+      </header>
+      <main className={contentClassName}>{children}</main>
+    </dialog>
   );
 }

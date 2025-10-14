@@ -15,12 +15,13 @@ import { toast } from "react-toastify";
 
 export default function BoardLists(): ReactNode {
 
-  const { list    , move } = use(BoardContext);
+  const { list    , dispatchList } = use(BoardContext);
   const {activeListId,activeItemId,deactive}=use(ActiveItemContext )
  
   const handelMoveButtonClick = (tolistId: string): void => {
     if (activeListId && activeItemId) {
-      move(activeListId, activeItemId, tolistId);
+      dispatchList({type:'moved',fromlistId:activeListId, ItemId:activeItemId, tolistId})
+      
       toast.success('Iteam Move succeddfully')
     }
     deactive() 

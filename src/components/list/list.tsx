@@ -15,10 +15,10 @@ type props = {
   list: ListType;
 };
 export default function List({ list }: props): ReactNode {
-    const ref = useRef<HTMLDialogElement>(null);
+    const mogalRef = useRef<HTMLDialogElement>(null);
 
-    const handelOpenButtonClick = (): void => {
-      ref.current?.showModal();
+    const handelClickButton = (): void => {
+      mogalRef.current?.showModal();
     };
 
   return (
@@ -26,7 +26,7 @@ export default function List({ list }: props): ReactNode {
       <div className={styles.header}>
         <div className={styles.title}>{list.title}</div>
         <div className={styles.actions}>
-          <IconButton onClick={handelOpenButtonClick }>
+          <IconButton onClick={handelClickButton }>
           <MingcuteAddLine  />
         </IconButton>
          <IconButton>
@@ -42,7 +42,7 @@ export default function List({ list }: props): ReactNode {
           </li>
         ))}
       </ul>
-      <CreateListItemModal ref={ref} listId={list.id} />
+      <CreateListItemModal ref={mogalRef} listId={list.id} />
     </div>
   );
 }

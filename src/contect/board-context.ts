@@ -1,15 +1,18 @@
+import type { ListAction } from "@/reducers/list-reducer";
 import type { ListType } from "@/types/list";
-import type { ListItemType } from "@/types/list.item";
-import { createContext } from "react";
+// import type { ListItemType } from "@/types/list.item";
+import { createContext, type ActionDispatch } from "react";
 type contextValue={
 list:ListType[],
-create:(listId: string, item: ListItemType)=>void
-move:(fromlistId: string, ItemId: string, tolistId: string)=>void
-remove:(listId: string, ItemId: string)=>void
+dispatchList:ActionDispatch<[action: ListAction]>
+// create:(listId: string, item: ListItemType)=>void
+// move:(fromlistId: string, ItemId: string, tolistId: string)=>void
+// remove:(listId: string, ItemId: string)=>void
 }
 export const BoardContext=createContext<contextValue>({
 list:[],
-create:()=>{},
-move:()=>{},
-remove:()=>{},
+dispatchList:()=>{}
+// create:()=>{},
+// move:()=>{},
+// remove:()=>{},
 })

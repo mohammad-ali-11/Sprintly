@@ -20,17 +20,21 @@ export default function CreateListItemModal({
   ...otherProps
 }: props): ReactNode {
     const formRef=useRef<HTMLFormElement>(null)
-   const{create}= use(BoardContext)
+   const{dispatchList}= use(BoardContext)
    const handelCancelItemClick=():void=>{
     ref.current?.close()
+   }
+   const handleCloseModal=():void=>{
+    formRef.current?.reset()
    }
     const handelFormSubmit=(e:FormEvent<HTMLFormElement>):void=>{
         e.preventDefault()
         const formData=new FormData(e.currentTarget)
         const id = globalThis.crypto.randomUUID();
         const title=formData.get('titel') as string
-        create(listId,{id,title})
-        e.currentTarget.reset()
+        dispatchList({type:'created',listId,item:{id,title}})
+       
+        
         toast.success('Item Create succsess')
         ref.current?.close()
     }
@@ -38,6 +42,7 @@ export default function CreateListItemModal({
     <Modal
       ref={ref}
       heading="create new item"
+      onClick={handleCloseModal}
       contentClassName={clsx(styles["create-list-item-modal"],contentClassName,)}
       {...otherProps}
     >

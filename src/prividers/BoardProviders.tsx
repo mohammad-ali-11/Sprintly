@@ -12,7 +12,7 @@ import { listData } from "@/data/list-data";
 
 import type { ListType } from "@/types/list";
 import ListReducer from "@/reducers/list-reducer";
-import type { ListItemType } from "@/types/list.item";
+// import type { ListItemType } from "@/types/list.item";
 
 type props = PropsWithChildren;
 
@@ -29,33 +29,33 @@ function load(): ListType[] {
 
 export default function BoardProviders({ children }: props): ReactNode {
   // const [list, setList] = useState<ListType[]>(load);
- const [list,dispatch] =useReducer(ListReducer,load())
+ const [list,dispatchList] =useReducer(ListReducer,load())
   console.log(list);
 
   useEffect(() => {
     save(list);
   }, [list]);
 
-  const create = (listId: string, item: ListItemType): void => {
-    // setList((old) => {
+  // const create = (listId: string, item: ListItemType): void => {
+  //   // setList((old) => {
     
-    // });
-    dispatch({type:'created',listId,item})
-  };
-  const move = (fromlistId: string, ItemId: string, tolistId: string): void => {
-    // setList((old) => {
+  //   // });
+  //   dispatch({type:'created',listId,item})
+  // };
+  // const move = (fromlistId: string, ItemId: string, tolistId: string): void => {
+  //   // setList((old) => {
      
-    // });
-    dispatch({type:'moved',fromlistId,ItemId,tolistId})
-  };
-  const remove = (listId: string, ItemId: string): void => {
-    // setList((old) => {
+  //   // });
+  //   dispatch({type:'moved',fromlistId,ItemId,tolistId})
+  // };
+  // const remove = (listId: string, ItemId: string): void => {
+  //   // setList((old) => {
     
-    // });
-    dispatch({type:'removed',listId,ItemId})
-  };
+  //   // });
+  //   dispatch({type:'removed',listId,ItemId})
+  // };
   return (
-    <BoardContext value={{ remove, move, create, list }}>
+    <BoardContext value={{ dispatchList, list }}>
       {children}
     </BoardContext>
   );
