@@ -2,7 +2,6 @@ import { type ReactNode, use } from "react";
 
 import { BoardContext } from "@/contect/board-context";
 
-import Button from "@/components/Button/Button";
 import IconButton from "@/components/IconButton/IconButton";
 import List from "@/components/list/list";
 
@@ -10,44 +9,19 @@ import MingcuteAddLine from "@/icons/MingcuteAddLine";
 import MingcuteEdit2Line from "@/icons/MingcuteEdit2Line";
 
 import styles from "./BoardLists.module.css";
-import { ActiveItemContext } from "@/contect/active-item-context";
-import { toast } from "react-toastify";
 
 export default function BoardLists(): ReactNode {
+  const { list } = use(BoardContext);
 
-  const { list    , dispatchList } = use(BoardContext);
-  const {activeListId,activeItemId,deactive}=use(ActiveItemContext )
- 
-  const handelMoveButtonClick = (tolistId: string): void => {
-    if (activeListId && activeItemId) {
-      dispatchList({type:'moved',fromlistId:activeListId, ItemId:activeItemId, tolistId})
-      
-      toast.success('Iteam Move succeddfully')
-    }
-    deactive() 
-  };
   return (
     <>
       <div className={styles["board-toolbar"]}>
         <div className={styles.title}>titel</div>
         <div className={styles.actions}>
-          <div className={styles.spacer}>
-            {activeListId !== null &&
-              list
-                .filter((list) => list.id !== activeListId)
-                .map((list) => (
-                  <Button
-                    key={list.id}
-                    onClick={() => handelMoveButtonClick(list.id)}
-                  >
-                    {list?.title}
-                  </Button>
-                ))}
-          </div>
           <IconButton>
             <MingcuteEdit2Line />
           </IconButton>
-          <IconButton >
+          <IconButton>
             <MingcuteAddLine />
           </IconButton>
         </div>
@@ -55,9 +29,7 @@ export default function BoardLists(): ReactNode {
       <ul className={styles["board-lists"]}>
         {list.map((item) => (
           <li key={item?.id}>
-            <List
-              list={item}
-            />
+            <List list={item} />
           </li>
         ))}
       </ul>
