@@ -11,26 +11,41 @@ import type { ListItemType } from "@/types/list.item";
 import IconButton from "../IconButton/IconButton";
 
 import styles from "./ListItem.module.css";
+import { useSortable } from "@dnd-kit/sortable";
+import {CSS} from '@dnd-kit/utilities';
 
 type props = {
-  listId: string;
+  listIndex: number;
   item: ListItemType;
+  ItemIndex:number
 };
-export default function ListItem({ item, listId }: props): ReactNode {
+export default function ListItem({ item, listIndex,ItemIndex }: props): ReactNode {
+ const{attributes,listeners,setNodeRef,transform,transition}= useSortable({
+    id:item.id,
+    data:{isList:false,listIndex,ItemIndex,item}
+  })
   const { dispatchList } = use(BoardContext);
   const handelRemoveButtonClick = (e: MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();
-    dispatchList({ type: "removed", listId, ItemId: item.id });
+    dispatchList({ type: "item-removed", listIndex, ItemIndex});
 
     toast.success("Iteam remove succeddfully");
   };
 
   return (
-    <div className={styles["list-item"]}>
+    <div ref={setNodeRef}
+     className={styles["list-item"]}
+     style={{
+      transform: CSS.Translate.toString(transform),
+    transition,
+     }}
+     {...listeners}
+     {...attributes}
+     >
       {item.title}
       <IconButton
         className={styles["remove-icon"]}
-        onClick={handelRemoveButtonClick}
+        onPointerDown={handelRemoveButtonClick}
       >
         <MingcuteDelete2Line />
       </IconButton>

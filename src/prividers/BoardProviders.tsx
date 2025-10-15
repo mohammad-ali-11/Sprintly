@@ -2,8 +2,6 @@ import {
   type PropsWithChildren,
   type ReactNode,
   useEffect,
-  useReducer,
-  useState,
 } from "react";
 
 import { BoardContext } from "@/contect/board-context";
@@ -12,6 +10,7 @@ import { listData } from "@/data/list-data";
 
 import type { ListType } from "@/types/list";
 import ListReducer from "@/reducers/list-reducer";
+import {  useImmerReducer } from "use-immer";
 // import type { ListItemType } from "@/types/list.item";
 
 type props = PropsWithChildren;
@@ -29,7 +28,7 @@ function load(): ListType[] {
 
 export default function BoardProviders({ children }: props): ReactNode {
   // const [list, setList] = useState<ListType[]>(load);
- const [list,dispatchList] =useReducer(ListReducer,load())
+ const [list,dispatchList] =useImmerReducer(ListReducer,load())
   console.log(list);
 
   useEffect(() => {

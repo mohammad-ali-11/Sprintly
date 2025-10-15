@@ -10,11 +10,19 @@ import ListItem from "../ListItem/ListItem";
 import styles from "./list.module.css";
 import CreateListItemModal from "../CreateListItemModal/CreateListItemModal";
 import MingcuteAddLine from "@/icons/MingcuteAddLine";
+import { SortableContext } from "@dnd-kit/sortable";
+import { useDraggable } from "@dnd-kit/core";
+
 
 type props = {
+  listIndex:number
   list: ListType;
 };
-export default function List({ list }: props): ReactNode {
+export default function List({ list ,listIndex}: props): ReactNode {
+ const{setNodeRef} =useDraggable({
+    id:list.id,
+    data:{isList:true,listIndex,list}
+  })
     const mogalRef = useRef<HTMLDialogElement>(null);
 
     const handelClickButton = (): void => {
@@ -35,14 +43,16 @@ export default function List({ list }: props): ReactNode {
         </div>
        
       </div>
-      <ul className={styles.items}>
-        {list.items.map((item) => (
+      <SortableContext id={list.id} items={list.items.map(item=>item.id)}>
+      <ul ref={setNodeRef} className={styles.items}>
+        {list.items.map((item,ItemIndex) => (
           <li key={item.id}>
-            <ListItem item={item} listId={list.id} />
+            <ListItem item={item} listIndex={listIndex} ItemIndex={ItemIndex}/>
           </li>
         ))}
       </ul>
-      <CreateListItemModal ref={mogalRef} listId={list.id} />
+      </SortableContext>
+      <CreateListItemModal ref={mogalRef} listIndex={listIndex} />
     </div>
   );
 }

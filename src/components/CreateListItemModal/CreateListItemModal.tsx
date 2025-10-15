@@ -11,11 +11,11 @@ import { BoardContext } from "@/contect/board-context";
 import { toast } from "react-toastify";
 
 type props = Omit<ComponentProps<typeof Modal>, "children" | "heading">&{
-  listId:string
+  listIndex:number
 }
 export default function CreateListItemModal({
   ref,
-  listId,
+  listIndex,
   contentClassName,
   ...otherProps
 }: props): ReactNode {
@@ -32,7 +32,7 @@ export default function CreateListItemModal({
         const formData=new FormData(e.currentTarget)
         const id = globalThis.crypto.randomUUID();
         const title=formData.get('titel') as string
-        dispatchList({type:'created',listId,item:{id,title}})
+        dispatchList({type:'item-created',listIndex,item:{id,title}})
        
         
         toast.success('Item Create succsess')
