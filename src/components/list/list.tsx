@@ -1,58 +1,21 @@
-import { useRef, type ReactNode } from "react";
-
-import MingcuteMore1Line from "@/icons/MingcuteMore1Line";
+import { type ReactNode } from "react";
 
 import type { ListType } from "@/types/list";
 
-import IconButton from "../IconButton/IconButton";
-import ListItem from "../ListItem/ListItem";
+import ListHeader from "./components/ListHeader/ListHeader";
+import ListItems from "./components/ListItems/ListItems";
 
 import styles from "./list.module.css";
-import CreateListItemModal from "../CreateListItemModal/CreateListItemModal";
-import MingcuteAddLine from "@/icons/MingcuteAddLine";
-import { SortableContext } from "@dnd-kit/sortable";
-import { useDraggable } from "@dnd-kit/core";
-
 
 type props = {
-  listIndex:number
+  listIndex: number;
   list: ListType;
 };
-export default function List({ list ,listIndex}: props): ReactNode {
- const{setNodeRef} =useDraggable({
-    id:list.id,
-    data:{isList:true,listIndex,list}
-  })
-    const mogalRef = useRef<HTMLDialogElement>(null);
-
-    const handelClickButton = (): void => {
-      mogalRef.current?.showModal();
-    };
-
+export default function List({ list, listIndex }: props): ReactNode {
   return (
     <div className={styles.list}>
-      <div className={styles.header}>
-        <div className={styles.title}>{list.title}</div>
-        <div className={styles.actions}>
-          <IconButton onClick={handelClickButton }>
-          <MingcuteAddLine  />
-        </IconButton>
-         <IconButton>
-          <MingcuteMore1Line />
-        </IconButton>
-        </div>
-       
-      </div>
-      <SortableContext id={list.id} items={list.items.map(item=>item.id)}>
-      <ul ref={setNodeRef} className={styles.items}>
-        {list.items.map((item,ItemIndex) => (
-          <li key={item.id}>
-            <ListItem item={item} listIndex={listIndex} ItemIndex={ItemIndex}/>
-          </li>
-        ))}
-      </ul>
-      </SortableContext>
-      <CreateListItemModal ref={mogalRef} listIndex={listIndex} />
+      <ListHeader title={list.title} listIndex={listIndex} />
+      <ListItems listIndex={listIndex} list={list} />
     </div>
   );
 }
