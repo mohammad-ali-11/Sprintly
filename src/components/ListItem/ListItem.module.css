@@ -8,15 +8,20 @@
     align-items: start;
     gap: 1rem;
     border: 1px solid transparent;
+    cursor: default;
+    user-select: none;
 
     .remove-icon{
         opacity: 0;
     }
-    &:hover{
+    &:not(.pressentational){
+        &:hover{
         .remove-icon{
         opacity: 1;
     } 
     }
+    }
+    
     
 
     }
