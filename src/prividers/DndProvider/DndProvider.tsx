@@ -14,6 +14,7 @@ import ListItem from "@/components/ListItem/ListItem";
 
 import type { DraggableData } from "@/types/draggable-data";
 import { BoardContext } from "@/contect/board-context";
+import List from "@/components/list/list";
 
 type props = PropsWithChildren;
 export default function DndProvider({ children }: props): ReactNode {
@@ -25,7 +26,7 @@ export default function DndProvider({ children }: props): ReactNode {
   };
     const handleDragOver = (e:DragEndEvent): void => {
     // setActiveData(null);
-    if (!e.over) {
+    if (!e.over ||e.active.data.current!.isList) {
       return
     }
     dispatchList({type:'item-dragged-over',
@@ -42,16 +43,27 @@ export default function DndProvider({ children }: props): ReactNode {
     if (!e.over) {
       return
     }
-    dispatchList({type:'item-dragged-end',
+    if (e.active.data.current!.isList) {
+      dispatchList({
+        type:'list-dragged-end',
+       activeListIndex: e.active.data.current!.listIndex,
+       overListIndex: e.over.data.current!.itemIndex,
+    })
+    }else{
+      dispatchList({
+      type:'item-dragged-end',
        activeListIndex: e.active.data.current!.listIndex,
       activeItemIndex:  e.active.data.current!.itemIndex,
       overItemIndex: e.over.data.current!.itemIndex,
     })
+    }
+    
   };
   const sensors = useSensors(useSensor(PointerSensor));
   return (
     <DndContext
       sensors={sensors}
+      
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}
@@ -59,11 +71,16 @@ export default function DndProvider({ children }: props): ReactNode {
       {children}
       <DragOverlay>
         {activeData &&
-          (activeData.isList ? null : (
+          (activeData.isList ? (
+            <List
+             pressentational={true} 
+             listIndex={activeData.listIndex} 
+             list={activeData.list}/>
+          ) : (
             <ListItem
             pressentational={true}
               listIndex={activeData.listIndex}
-              ItemIndex={activeData.itemIndex}
+              itemIndex={activeData.itemIndex}
               item={activeData.item}
             />
           ))}

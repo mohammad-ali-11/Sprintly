@@ -9,6 +9,7 @@ import MingcuteAddLine from "@/icons/MingcuteAddLine";
 import MingcuteEdit2Line from "@/icons/MingcuteEdit2Line";
 
 import styles from "./BoardLists.module.css";
+import { SortableContext } from "@dnd-kit/sortable";
 
 export default function BoardLists(): ReactNode {
   const { list } = use(BoardContext);
@@ -26,13 +27,15 @@ export default function BoardLists(): ReactNode {
           </IconButton>
         </div>
       </div>
+      <SortableContext id="board" items={list.map(list=>list.id)}>
       <ul className={styles["board-lists"]}>
-        {list.map((item,listIndex) => (
+        {list.map((item,listIndex) => ( 
           <li key={item?.id}>
             <List listIndex={listIndex} list={item} />
           </li>
         ))}
       </ul>
+      </SortableContext>
     </>
   );
 }

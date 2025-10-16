@@ -10,10 +10,11 @@ import type { ListType } from "@/types/list";
 import styles from "./ListItems.module.css";
 
 type props = {
+  pressentational?:boolean;
   listIndex: number;
   list: ListType;
 };
-export default function ListItems({ listIndex, list }: props): ReactNode {
+export default function ListItems({pressentational, listIndex, list }: props): ReactNode {
   const { setNodeRef } = useDraggable({
     id: list.id,
     data: { isList: true, listIndex, list },
@@ -25,6 +26,7 @@ export default function ListItems({ listIndex, list }: props): ReactNode {
           {list.items.map((item, itemIndex) => (
             <li key={item.id}>
               <ListItem
+              pressentational={pressentational}
                 item={item}
                 listIndex={listIndex}
                 itemIndex={itemIndex}

@@ -36,7 +36,7 @@ export default function ListItem({
   isDragging 
 
 }= useSortable({
-    id:item.id,
+   id:item.id,
     data:{isList:false,listIndex,itemIndex,item}
   })
   const { dispatchList } = use(BoardContext);
