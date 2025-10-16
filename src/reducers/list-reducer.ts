@@ -55,7 +55,7 @@ export default function ListReducer(
       const overList=draft[overListIndex]
      const newIndex=overItemIndex??overList.items.length 
 
-     overList.items.splice(newIndex,1)
+     overList.items.splice(newIndex,0,activeItem)
      activeList.items.splice(activeItemIndex,1)
       return;
     }

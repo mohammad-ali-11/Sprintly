@@ -1,4 +1,4 @@
-import { type MouseEvent, type ReactNode, use } from "react";
+import { type MouseEvent, type ReactNode, use, useRef } from "react";
 
 import { toast } from "react-toastify";
 
@@ -21,8 +21,21 @@ type props = {
   item: ListItemType;
   itemIndex:number
 };
-export default function ListItem({ item, listIndex,itemIndex,pressentational }: props): ReactNode {
- const{attributes,listeners,setNodeRef,transform,transition,isDragging }= useSortable({
+export default function ListItem({
+   item,
+  listIndex,
+  itemIndex,
+  pressentational
+   }: props): ReactNode {
+ const{
+  attributes,
+  listeners,
+  setNodeRef,
+  transform,
+  transition,
+  isDragging 
+
+}= useSortable({
     id:item.id,
     data:{isList:false,listIndex,itemIndex,item}
   })

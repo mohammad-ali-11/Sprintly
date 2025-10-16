@@ -1,16 +1,20 @@
 .list-item{
-    background-color: var(--color-surface-3);
-    box-shadow: var(--shadow-2);
-    padding: 0.5rem;
-    border-radius: var(--border-radius-2);
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: start;
-    gap: 1rem;
-    border: 1px solid transparent;
-    cursor: default;
-    user-select: none;
+     background-color: var(--color-surface-3);
+  box-shadow: var(--shadow-2);
 
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 1rem;
+
+  padding: 0.5rem;
+
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-2);
+
+  cursor: default;
+  user-select: none;
+  
     .remove-icon{
         opacity: 0;
     }

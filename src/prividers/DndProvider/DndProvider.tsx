@@ -24,7 +24,7 @@ export default function DndProvider({ children }: props): ReactNode {
     setActiveData(e.active.data.current as DraggableData);
   };
     const handleDragOver = (e:DragEndEvent): void => {
-    setActiveData(null);
+    // setActiveData(null);
     if (!e.over) {
       return
     }

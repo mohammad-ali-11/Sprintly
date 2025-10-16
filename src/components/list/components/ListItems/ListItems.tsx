@@ -22,12 +22,12 @@ export default function ListItems({ listIndex, list }: props): ReactNode {
     <div className={styles["list-items"]}>
       <SortableContext id={list.id} items={list.items.map((item) => item.id)}>
         <ul ref={setNodeRef} className={styles.items}>
-          {list.items.map((item, ItemIndex) => (
+          {list.items.map((item, itemIndex) => (
             <li key={item.id}>
               <ListItem
                 item={item}
                 listIndex={listIndex}
-                ItemIndex={ItemIndex}
+                itemIndex={itemIndex}
               />
             </li>
           ))}
