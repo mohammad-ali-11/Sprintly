@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import styles from './RootLayout.module.css'
-import Footer from "@/components/Footer/Footer";
+// import Footer from "@/components/Footer/Footer";
 import { Outlet } from "react-router";
 import Header from "@/components/Header/Header";
 export default function RootLayout():ReactNode {
@@ -9,7 +9,7 @@ export default function RootLayout():ReactNode {
         <main>
             <Outlet/>
         </main>
-        <Footer/>
+        {/* <Footer/> */}
     </div>
     
 }

@@ -63,7 +63,6 @@ export default function DndProvider({ children }: props): ReactNode {
   return (
     <DndContext
       sensors={sensors}
-      
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}

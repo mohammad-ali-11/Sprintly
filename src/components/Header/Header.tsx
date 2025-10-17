@@ -5,7 +5,7 @@ export default function Header():ReactNode {
     return(
         <header className={styles.header}>
             <Link to='/'className={styles.logo}>
-            <img src="/logo-removebg-preview.png" alt="logo" />
+            <img src="/public/Sprintly .png" alt="logo" />
             </Link>
         </header>
     )
