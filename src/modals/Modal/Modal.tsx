@@ -3,16 +3,15 @@ import {
   type MouseEvent,
   type ReactNode,
   type RefObject,
-  useRef,
 } from "react";
 
 import clsx from "clsx";
 
 import MingcuteCloseLine from "@/icons/MingcuteCloseLine";
 
-import IconButton from "../IconButton/IconButton";
 
 import styles from "./Modal.module.css";
+import IconButton from "@/components/IconButton/IconButton";
 
 type props = ComponentProps<"dialog"> & {
   heading: string;

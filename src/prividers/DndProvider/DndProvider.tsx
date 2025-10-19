@@ -47,7 +47,7 @@ export default function DndProvider({ children }: props): ReactNode {
       dispatchList({
         type:'list-dragged-end',
        activeListIndex: e.active.data.current!.listIndex,
-       overListIndex: e.over.data.current!.itemIndex,
+       overListIndex: e.over.data.current!.listIndex,
     })
     }else{
       dispatchList({

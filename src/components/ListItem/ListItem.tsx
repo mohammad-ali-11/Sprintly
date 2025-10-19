@@ -15,6 +15,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import {CSS} from '@dnd-kit/utilities';
 import clsx from "clsx";
 
+
 type props = {
   pressentational?:boolean;
   listIndex: number;
@@ -36,7 +37,7 @@ export default function ListItem({
   isDragging ,
   over
 }= useSortable({
-   id:item.id,
+   id:item?.id,
     data:{isList:false,listIndex,itemIndex,item}
   })
   const overListIndex=over?.data.current?.listIndex
@@ -59,7 +60,7 @@ export default function ListItem({
      {...listeners}
      {...attributes}
      >
-      {item.title}
+      {item?.title}
       <IconButton
         className={styles["remove-icon"]}
         onPointerDown={handelRemoveButtonClick}
@@ -67,5 +68,6 @@ export default function ListItem({
         <MingcuteDelete2Line />
       </IconButton>
     </div>
+ 
   );
 }

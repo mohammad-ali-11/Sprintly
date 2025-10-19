@@ -21,10 +21,10 @@ export default function ListItems({pressentational, listIndex, list }: props): R
   });
   return (
     <div className={styles["list-items"]}>
-      <SortableContext id={list.id} items={list.items.map((item) => item.id)}>
+      <SortableContext id={list.id} items={list.items.map((item) => item?.id)}>
         <ul ref={setNodeRef} className={styles.items}>
-          {list.items.map((item, itemIndex) => (
-            <li key={item.id}>
+          {list.items?.map((item, itemIndex) => (
+            <li key={item?.id}>
               <ListItem
               pressentational={pressentational}
                 item={item}
@@ -38,3 +38,4 @@ export default function ListItems({pressentational, listIndex, list }: props): R
     </div>
   );
 }
+

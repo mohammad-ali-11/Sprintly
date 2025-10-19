@@ -26,7 +26,7 @@ export default function List({pressentational, list, listIndex }: props): ReactN
     isDragging,
   } = useSortable({
     id: list.id,
-    data: { isList: false, listIndex, list },
+    data: { isList: true, listIndex, list },
   });
   return (
     <div

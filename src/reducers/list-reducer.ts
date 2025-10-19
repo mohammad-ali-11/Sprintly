@@ -14,7 +14,7 @@ export type ListAction =
   | {
       type: "item-removed";
       listIndex: number;
-      ItemIndex: number;
+      itemIndex: number;
     }
   | {
       type: "item-dragged-end";
@@ -48,7 +48,7 @@ export default function ListReducer(
     }
     case "item-removed": {
       const list = draft[action.listIndex];
-      list.items.splice(action.ItemIndex, 1);
+      list.items.splice(action.itemIndex, 1);
       return;
     }
     case "item-dragged-over": {
@@ -85,6 +85,7 @@ export default function ListReducer(
         return;
       }
       const activeList = draft[activeListIndex];
+      
       draft.splice(activeListIndex, 1);
       draft.splice(overListIndex, 0, activeList);
 
