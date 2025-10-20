@@ -6,6 +6,15 @@ import type { ListType } from "@/types/list";
 import type { ListItemType } from "@/types/list.item";
 
 export type ListAction =
+| {
+      type: "list-created";
+      list: ListType;
+    }
+  | {
+      type: "list-dragged-end";
+      activeListIndex: number;
+      overListIndex: number;
+    }
   | {
       type: "item-created";
       listIndex: number;
@@ -28,17 +37,30 @@ export type ListAction =
       activeItemIndex: number;
       overListIndex: number;
       overItemIndex?: number;
-    }
-  | {
-      type: "list-dragged-end";
-      activeListIndex: number;
-      overListIndex: number;
     };
+
 export default function ListReducer(
   draft: Draft<ListType[]>,
   action: ListAction,
 ): void {
   switch (action.type) {
+     case "list-created": {
+      draft.push(action.list)
+      return;
+    }
+    case "item-dragged-end": {
+      const { activeItemIndex, activeListIndex, overItemIndex } = action;
+      if (activeItemIndex === overItemIndex) {
+        return;
+      }
+      const activeList = draft[activeListIndex];
+      activeList.items = arrayMove(
+        activeList.items,
+        activeItemIndex,
+        overItemIndex,
+      );
+      return;
+    }
     case "item-created": {
       const list = draft[action.listIndex];
 
@@ -66,26 +88,14 @@ export default function ListReducer(
       activeList.items.splice(activeItemIndex, 1);
       return;
     }
-    case "item-dragged-end": {
-      const { activeItemIndex, activeListIndex, overItemIndex } = action;
-      if (activeItemIndex === overItemIndex) {
-        return;
-      }
-      const activeList = draft[activeListIndex];
-      activeList.items = arrayMove(
-        activeList.items,
-        activeItemIndex,
-        overItemIndex,
-      );
-      return;
-    }
+
     case "list-dragged-end": {
       const { activeListIndex, overListIndex } = action;
       if (activeListIndex === overListIndex) {
         return;
       }
       const activeList = draft[activeListIndex];
-      
+
       draft.splice(activeListIndex, 1);
       draft.splice(overListIndex, 0, activeList);
 
