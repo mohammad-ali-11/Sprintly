@@ -21,9 +21,9 @@ export default function ListHeader({
   title,
   listIndex,
 }: props): ReactNode {
-  const mogalRef = useRef<HTMLDialogElement>(null);
-  const handelClickButton = (): void => {
-    mogalRef.current?.showModal();
+  const modalRef = useRef<HTMLDialogElement>(null);
+  const handelCreateButtonClick = (): void => {
+    modalRef.current?.showModal();
   };
   return (
     <div className={styles["list-header"]}>
@@ -32,14 +32,14 @@ export default function ListHeader({
         <div className={styles.title}>{title}</div>
       </div>
       <div className={styles.actions}>
-        <IconButton onClick={handelClickButton}>
+        <IconButton onClick={handelCreateButtonClick}>
           <MingcuteAddLine />
         </IconButton>
         <IconButton>
           <MingcuteMore1Line />
         </IconButton>
       </div>
-      <ListItemModal ref={mogalRef} listIndex={listIndex} />
+      <ListItemModal modalRef={modalRef} listIndex={listIndex} />
     </div>
   );
 }

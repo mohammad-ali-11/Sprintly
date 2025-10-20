@@ -7,25 +7,21 @@ import {
 } from "react";
 
 import { toast } from "react-toastify";
-
-import clsx from "clsx";
-
 import { BoardContext } from "@/contect/board-context";
 
-
-import styles from "./ListItemModal.module.css";
 import TextInput from "@/components/TextInput/TextInput";
-import Button from "@/components/Button/Button";
-import Modal from "../Modal/Modal";
 
-type props = Omit<ComponentProps<typeof Modal>, "children" | "heading"> & {
+import FormModal from "../FormModal/FormModal";
+
+import type { ListItemType } from "@/types/list.item";
+
+type props = Pick<ComponentProps<typeof FormModal>, "modalRef"> & {
   listIndex: number;
 };
+type values=Omit<ListItemType,'id'>
 export default function ListItemModal({
-  ref,
+  modalRef,
   listIndex,
-  contentClassName,
-  ...otherProps
 }: props): ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
   const { dispatchList } = use(BoardContext);
@@ -33,48 +29,38 @@ export default function ListItemModal({
   const handelFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const id = globalThis.crypto.randomUUID();
-    const title = formData.get("title") as string;
-    if (!title||title.trim()==='') {
-    toast.error("لطفاً عنوان را وارد کنید!");
-    return
+    const values:values={
+      title:formData.get('title') as string
     }
-    dispatchList({ type: "item-created", listIndex, item: { id, title } });
+     if (!validateTitel(values.title)) {
+      return
+    }
+    const id = globalThis.crypto.randomUUID();
+    // const title = formData.get("title") as string;
+   
+    // if (!title || title.trim() === "") {
+    //   toast.error("لطفاً عنوان را وارد کنید!");
+    //   return;
+    // }
+    dispatchList({ type: "item-created", listIndex, item: { id, ...values } });
     toast.success("Item Create succsess");
-    formRef.current?.reset()
-    ref.current?.close();
-    
-  };
-
-  const handelCancelItemClick = (): void => {
-    ref.current?.close();
-  };
-  const handleCloseModal = (): void => {
     formRef.current?.reset();
+    modalRef.current?.close();
   };
+  const validateTitel=(title:string):boolean=>{
+    if (title.length===0) {
+      return false
+    }
+  }
 
   return (
-    <Modal
-      ref={ref}
+    <FormModal
+      // onReset={handleFormReset}
+      modalRef={modalRef}
       heading="create new item"
-      onClick={handleCloseModal}
-      contentClassName={clsx(
-        styles["create-list-item-modal"],
-        contentClassName,
-      )}
-      {...otherProps}
+      onSubmit={handelFormSubmit}
     >
-      <form onSubmit={handelFormSubmit} ref={formRef}>
-        <TextInput label="titel" name="title" type="text" />
-        <div className={styles.actions}>
-          <Button color="primary" onClick={(e) => e.stopPropagation()}>
-            submit
-          </Button>
-          <Button onClick={handelCancelItemClick} type="reset">
-            cancel
-          </Button>
-        </div>
-      </form>
-    </Modal>
+      <TextInput label="titel" name="title" type="text" />
+    </FormModal>
   );
 }
