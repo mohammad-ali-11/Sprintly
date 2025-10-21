@@ -1,9 +1,8 @@
-.board-lists{
-overflow: auto;
-display: flex;
-gap: 1rem;
-block-size: 100%;
-padding-inline-start: 0;
-padding-block-end: 0.5rem;
-  
+.board-lists {
+  overflow: auto;
+  display: flex;
+  gap: 1rem;
+  block-size: 100%;
+  padding-inline-start: 0;
+  padding-block-end: 0.5rem;
 }

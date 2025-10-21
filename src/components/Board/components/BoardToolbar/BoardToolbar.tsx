@@ -1,20 +1,20 @@
-import { useRef, type ReactNode } from "react";
+import { type ReactNode, useRef } from "react";
 
 import IconButton from "@/components/IconButton/IconButton";
 
 import MingcuteAddLine from "@/icons/MingcuteAddLine";
 import MingcuteEdit2Line from "@/icons/MingcuteEdit2Line";
 
-import styles from "./BoardToolbar.module.css";
 import ListModal from "@/modals/ListModal/ListModal";
 
-export default function BoardToolbar(): ReactNode {
-  
-  const modalRef=useRef<HTMLDialogElement>(null)
+import styles from "./BoardToolbar.module.css";
 
-  const handleCreateListButtonClick=():void=>{
-    modalRef.current?.showModal()
-  }
+export default function BoardToolbar(): ReactNode {
+  const modalRef = useRef<HTMLDialogElement>(null);
+
+  const handleCreateListButtonClick = (): void => {
+    modalRef.current?.showModal();
+  };
 
   return (
     <div className={styles["board-toolbar"]}>

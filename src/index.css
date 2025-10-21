@@ -1,14 +1,14 @@
 *,
-*::after
-*::before{
+*::after *::before {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-html{
+html {
   caret-color: var(--color-primary);
   accent-color: var(--color-primary);
-font-family: "Vazirmatn", sans-serif;}
+  font-family: "Vazirmatn", sans-serif;
+}
 input,
 select,
 label,
@@ -19,25 +19,24 @@ legend,
 optgroup,
 output,
 option,
-datalist{
+datalist {
   font: inherit;
 }
 
-body{
+body {
   background-color: var(--color-surface-1);
   color: var(--color-text);
   margin-inline: auto;
- 
+
   font-size: var(--fz-400);
 }
 ul {
   list-style: none;
 }
-a{
+a {
   color: var(--color-primary);
-  
-  &:hover{
+
+  &:hover {
     color: var(--color-primary-dark);
-    
   }
 }

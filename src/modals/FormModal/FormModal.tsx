@@ -40,7 +40,7 @@ export default function FormModal({
   children,
   ...otherProps
 }: props): ReactNode {
-  const internalFormRef= useRef<HTMLFormElement>(null);
+  const internalFormRef = useRef<HTMLFormElement>(null);
 
   const handelCancelItemClick = (): void => {
     modalRef.current?.close();
@@ -55,21 +55,27 @@ export default function FormModal({
       heading={heading}
       onClose={handleCloseModal}
       contentClassName={styles["form-modal"]}
-    
     >
-      <form ref={(node)=>{
-        internalFormRef.current=node
-        if (formRef) {
-            formRef.current=node
-        }
-      }} {...otherProps}> 
+      <form
+        ref={(node) => {
+          internalFormRef.current = node;
+          if (formRef) {
+            formRef.current = node;
+          }
+        }}
+        {...otherProps}
+      >
         {children}
         <div className={styles.actions}>
-            {extraActions}
+          {extraActions}
           <Button color="primary" onClick={(e) => e.stopPropagation()}>
             submit
           </Button>
-          <Button onClick={handelCancelItemClick} type="reset" className={styles.cancel}>
+          <Button
+            onClick={handelCancelItemClick}
+            type="reset"
+            className={styles.cancel}
+          >
             cancel
           </Button>
         </div>

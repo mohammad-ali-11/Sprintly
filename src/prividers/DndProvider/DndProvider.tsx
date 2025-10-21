@@ -10,54 +10,54 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 
+import { BoardContext } from "@/contect/board-context";
+
 import ListItem from "@/components/ListItem/ListItem";
+import List from "@/components/list/list";
 
 import type { DraggableData } from "@/types/draggable-data";
-import { BoardContext } from "@/contect/board-context";
-import List from "@/components/list/list";
 
 type props = PropsWithChildren;
 export default function DndProvider({ children }: props): ReactNode {
- const{dispatchList} =use(BoardContext)
+  const { dispatchList } = use(BoardContext);
 
   const [activeData, setActiveData] = useState<DraggableData | null>(null);
   const handleDragStart = (e: DragStartEvent): void => {
     setActiveData(e.active.data.current as DraggableData);
   };
-    const handleDragOver = (e:DragEndEvent): void => {
+  const handleDragOver = (e: DragEndEvent): void => {
     // setActiveData(null);
-    if (!e.over ||e.active.data.current!.isList) {
-      return
+    if (!e.over || e.active.data.current!.isList) {
+      return;
     }
-    dispatchList({type:'item-dragged-over',
-       activeListIndex: e.active.data.current!.listIndex,
-      activeItemIndex:  e.active.data.current!.itemIndex,
-      overListIndex:  e.over.data.current!.listIndex,
+    dispatchList({
+      type: "item-dragged-over",
+      activeListIndex: e.active.data.current!.listIndex,
+      activeItemIndex: e.active.data.current!.itemIndex,
+      overListIndex: e.over.data.current!.listIndex,
       overItemIndex: e.over.data.current!.itemIndex,
-    })
+    });
   };
 
-
-  const handleDragEnd = (e:DragEndEvent): void => {
+  const handleDragEnd = (e: DragEndEvent): void => {
     setActiveData(null);
     if (!e.over) {
-      return
+      return;
     }
     if (e.active.data.current!.isList) {
       dispatchList({
-        type:'list-dragged-end',
-       activeListIndex: e.active.data.current!.listIndex,
-       overListIndex: e.over.data.current!.listIndex,
-    })
-    }else{
+        type: "list-dragged-end",
+        activeListIndex: e.active.data.current!.listIndex,
+        overListIndex: e.over.data.current!.listIndex,
+      });
+    } else {
       dispatchList({
-      type:'item-dragged-end',
-       activeListIndex: e.active.data.current!.listIndex,
-      activeItemIndex:  e.active.data.current!.itemIndex,
-      overItemIndex: e.over.data.current!.itemIndex,
-    })
+        type: "item-dragged-end",
+        activeListIndex: e.active.data.current!.listIndex,
+        activeItemIndex: e.active.data.current!.itemIndex,
+        overItemIndex: e.over.data.current!.itemIndex,
+      });
     }
-    
   };
   const sensors = useSensors(useSensor(PointerSensor));
   return (
@@ -72,12 +72,13 @@ export default function DndProvider({ children }: props): ReactNode {
         {activeData &&
           (activeData.isList ? (
             <List
-             pressentational={true} 
-             listIndex={activeData.listIndex} 
-             list={activeData.list}/>
+              pressentational={true}
+              listIndex={activeData.listIndex}
+              list={activeData.list}
+            />
           ) : (
             <ListItem
-            pressentational={true}
+              pressentational={true}
               listIndex={activeData.listIndex}
               itemIndex={activeData.itemIndex}
               item={activeData.item}

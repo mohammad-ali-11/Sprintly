@@ -13,7 +13,7 @@ export type ListAction =
   | {
       type: "list-edited";
       listIndex: number;
-      list:Partial<ListType>
+      list: Partial<ListType>;
     }
   | {
       type: "list-remove";
@@ -53,23 +53,23 @@ export default function ListReducer(
   action: ListAction,
 ): void {
   switch (action.type) {
-     case "list-created": {
-      draft.push(action.list)
+    case "list-created": {
+      draft.push(action.list);
       return;
     }
-     case "list-edited": {
-      draft[action.listIndex]={...draft[action.listIndex],...action.list}
+    case "list-edited": {
+      draft[action.listIndex] = { ...draft[action.listIndex], ...action.list };
       return;
     }
     case "list-remove": {
-      draft.splice(action.listIndex,1)
+      draft.splice(action.listIndex, 1);
       return;
     }
     case "item-dragged-end": {
       const { activeItemIndex, activeListIndex, overItemIndex } = action;
       if (activeItemIndex === overItemIndex) {
         return;
-      } 
+      }
       const activeList = draft[activeListIndex];
       activeList.items = arrayMove(
         activeList.items,

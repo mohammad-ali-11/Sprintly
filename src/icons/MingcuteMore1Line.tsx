@@ -1,6 +1,6 @@
-import type{ReactNode, SVGProps} from "react";
+import type { ReactNode, SVGProps } from "react";
 
-export default  function MingcuteMore1Line(
+export default function MingcuteMore1Line(
   props: SVGProps<SVGSVGElement>,
 ): ReactNode {
   return (
@@ -22,4 +22,3 @@ export default  function MingcuteMore1Line(
     </svg>
   );
 }
-

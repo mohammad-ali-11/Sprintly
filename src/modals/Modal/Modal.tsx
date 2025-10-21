@@ -7,11 +7,11 @@ import {
 
 import clsx from "clsx";
 
+import IconButton from "@/components/IconButton/IconButton";
+
 import MingcuteCloseLine from "@/icons/MingcuteCloseLine";
 
-
 import styles from "./Modal.module.css";
-import IconButton from "@/components/IconButton/IconButton";
 
 type props = ComponentProps<"dialog"> & {
   heading: string;

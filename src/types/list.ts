@@ -1,7 +1,7 @@
-import type { ListItemType } from "./list.item"
+import type { ListItemType } from "./list.item";
 
-export type ListType={
-    id:string
-    title:string
-    items:ListItemType[]
-}
+export type ListType = {
+  id: string;
+  title: string;
+  items: ListItemType[];
+};

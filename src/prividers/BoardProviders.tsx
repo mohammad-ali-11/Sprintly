@@ -1,16 +1,15 @@
-import {
-  type PropsWithChildren,
-  type ReactNode,
-  useEffect,
-} from "react";
+import { type PropsWithChildren, type ReactNode, useEffect } from "react";
+
+import { useImmerReducer } from "use-immer";
 
 import { BoardContext } from "@/contect/board-context";
 
 import { listData } from "@/data/list-data";
 
-import type { ListType } from "@/types/list";
 import ListReducer from "@/reducers/list-reducer";
-import {  useImmerReducer } from "use-immer";
+
+import type { ListType } from "@/types/list";
+
 // import type { ListItemType } from "@/types/list.item";
 
 type props = PropsWithChildren;
@@ -28,7 +27,7 @@ function load(): ListType[] {
 
 export default function BoardProviders({ children }: props): ReactNode {
   // const [list, setList] = useState<ListType[]>(load);
- const [list,dispatchList] =useImmerReducer(ListReducer,load())
+  const [list, dispatchList] = useImmerReducer(ListReducer, load());
   console.log(list);
 
   useEffect(() => {
@@ -37,25 +36,21 @@ export default function BoardProviders({ children }: props): ReactNode {
 
   // const create = (listId: string, item: ListItemType): void => {
   //   // setList((old) => {
-    
+
   //   // });
   //   dispatch({type:'created',listId,item})
   // };
   // const move = (fromlistId: string, ItemId: string, tolistId: string): void => {
   //   // setList((old) => {
-     
+
   //   // });
   //   dispatch({type:'moved',fromlistId,ItemId,tolistId})
   // };
   // const remove = (listId: string, ItemId: string): void => {
   //   // setList((old) => {
-    
+
   //   // });
   //   dispatch({type:'removed',listId,ItemId})
   // };
-  return (
-    <BoardContext value={{ dispatchList, list }}>
-      {children}
-    </BoardContext>
-  );
+  return <BoardContext value={{ dispatchList, list }}>{children}</BoardContext>;
 }

@@ -19,18 +19,22 @@ import FormModal from "../FormModal/FormModal";
 
 type props = Pick<ComponentProps<typeof FormModal>, "modalRef"> & {
   listIndex?: number;
-  defaultValues?:Partial<values>
+  defaultValues?: Partial<values>;
 };
 type values = Omit<ListType, "id" | "items">;
 
-export default function ListModal({ defaultValues,modalRef, listIndex }: props): ReactNode {
+export default function ListModal({
+  defaultValues,
+  modalRef,
+  listIndex,
+}: props): ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
 
   const { dispatchList } = use(BoardContext);
 
   const handleRemoveButtonClick = (): void => {
-    if (listIndex===undefined) {
-      return
+    if (listIndex === undefined) {
+      return;
     }
     dispatchList({ type: "list-remove", listIndex });
     toast.success("list Remove succsess");
@@ -43,19 +47,22 @@ export default function ListModal({ defaultValues,modalRef, listIndex }: props):
     const values: values = {
       title: formData.get("title") as string,
     };
-   
+
     if (!validateTitel(values.title)) {
       return;
     }
-    if (listIndex!==undefined) {
-    dispatchList({ type: "list-edited", listIndex,list:values});
-    toast.success("list edited succsess");
-    }else{
+    if (listIndex !== undefined) {
+      dispatchList({ type: "list-edited", listIndex, list: values });
+      toast.success("list edited succsess");
+    } else {
       const id = globalThis.crypto.randomUUID();
-    dispatchList({ type: "list-created", list: { id, items: [], ...values } });
-    toast.success("list Create succsess");
+      dispatchList({
+        type: "list-created",
+        list: { id, items: [], ...values },
+      });
+      toast.success("list Create succsess");
     }
-    
+
     formRef.current?.reset();
     modalRef.current?.close();
   };
@@ -71,22 +78,29 @@ export default function ListModal({ defaultValues,modalRef, listIndex }: props):
     <FormModal
       // onReset={handleFormReset}
       modalRef={modalRef}
-      heading={listIndex !==undefined?'Edit Existing List':"create new list"}
+      heading={
+        listIndex !== undefined ? "Edit Existing List" : "create new list"
+      }
       onSubmit={handelFormSubmit}
       extraActions={
-        listIndex!==undefined&&(
+        listIndex !== undefined && (
           <Button
-          type="button"
-          variant="text"
-          color="danger"
-          onClick={handleRemoveButtonClick}
-        >
-          Remove
-        </Button>
+            type="button"
+            variant="text"
+            color="danger"
+            onClick={handleRemoveButtonClick}
+          >
+            Remove
+          </Button>
         )
       }
     >
-      <TextInput label="titel" name="title" defaultValue={defaultValues?.title} type="text" />
+      <TextInput
+        label="titel"
+        name="title"
+        defaultValue={defaultValues?.title}
+        type="text"
+      />
     </FormModal>
   );
 }

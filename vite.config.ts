@@ -7,8 +7,8 @@ import path from "node:path";
 export default defineConfig({
   plugins: [
     react({
-    babel: {
-        plugins: ['babel-plugin-react-compiler'],
+      babel: {
+        plugins: ["babel-plugin-react-compiler"],
       },
     }),
   ],

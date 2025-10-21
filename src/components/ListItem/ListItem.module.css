@@ -1,5 +1,5 @@
-.list-item{
-     background-color: var(--color-surface-3);
+.list-item {
+  background-color: var(--color-surface-3);
   box-shadow: var(--shadow-2);
 
   display: grid;
@@ -14,18 +14,15 @@
 
   cursor: default;
   user-select: none;
-  
-    .remove-icon{
-        opacity: 0;
-    }
-    &:not(.pressentational){
-        &:hover{
-        .remove-icon{
-        opacity: 1;
-    } 
-    }
-    }
-    
-    
 
+  .remove-icon {
+    opacity: 0;
+  }
+  &:not(.pressentational) {
+    &:hover {
+      .remove-icon {
+        opacity: 1;
+      }
     }
+  }
+}

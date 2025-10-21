@@ -1,10 +1,8 @@
-.header{
-    padding-block: 1rem;
-    .logo{
-        color: inherit;
-        text-decoration: none;
-        img{
-            block-size: 4rem;
-        }
-    }
+.logo {
+  color: inherit;
+  text-decoration: none;
+  img {
+    height: clamp(3rem, 5vw, 4rem);
+    width: auto;
+  }
 }

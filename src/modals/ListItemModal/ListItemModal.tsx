@@ -7,18 +7,19 @@ import {
 } from "react";
 
 import { toast } from "react-toastify";
+
 import { BoardContext } from "@/contect/board-context";
 
 import TextInput from "@/components/TextInput/TextInput";
 
-import FormModal from "../FormModal/FormModal";
-
 import type { ListItemType } from "@/types/list.item";
+
+import FormModal from "../FormModal/FormModal";
 
 type props = Pick<ComponentProps<typeof FormModal>, "modalRef"> & {
   listIndex: number;
 };
-type values=Omit<ListItemType,'id'>
+type values = Omit<ListItemType, "id">;
 export default function ListItemModal({
   modalRef,
   listIndex,
@@ -29,15 +30,15 @@ export default function ListItemModal({
   const handelFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const values:values={
-      title:formData.get('title') as string
-    }
-     if (!validateTitel(values.title)) {
-      return
+    const values: values = {
+      title: formData.get("title") as string,
+    };
+    if (!validateTitel(values.title)) {
+      return;
     }
     const id = globalThis.crypto.randomUUID();
     // const title = formData.get("title") as string;
-   
+
     // if (!title || title.trim() === "") {
     //   toast.error("لطفاً عنوان را وارد کنید!");
     //   return;
@@ -47,12 +48,12 @@ export default function ListItemModal({
     formRef.current?.reset();
     modalRef.current?.close();
   };
-  const validateTitel=(title:string):boolean=>{
-    if (title.length===0) {
-      return false
+  const validateTitel = (title: string): boolean => {
+    if (title.length === 0) {
+      return false;
     }
-    return true
-  }
+    return true;
+  };
 
   return (
     <FormModal
