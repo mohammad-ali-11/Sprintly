@@ -6,11 +6,16 @@ import type { ListType } from "@/types/list";
 import type { ListItemType } from "@/types/list.item";
 
 export type ListAction =
-| {
+  | {
       type: "list-created";
       list: ListType;
     }
-    | {
+  | {
+      type: "list-edited";
+      listIndex: number;
+      list:Partial<ListType>
+    }
+  | {
       type: "list-remove";
       listIndex: number;
     }
@@ -50,6 +55,10 @@ export default function ListReducer(
   switch (action.type) {
      case "list-created": {
       draft.push(action.list)
+      return;
+    }
+     case "list-edited": {
+      draft[action.listIndex]={...draft[action.listIndex],...action.list}
       return;
     }
     case "list-remove": {

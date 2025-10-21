@@ -39,7 +39,7 @@ export default function List({pressentational, list, listIndex }: props): ReactN
       }}
       {...attributes}
     >
-      <ListHeader title={list.title} listeners={listeners} listIndex={listIndex} />
+      <ListHeader list={list}  listeners={listeners} listIndex={listIndex} />
       <ListItems pressentational={pressentational} listIndex={listIndex} list={list} />
     </div>
   );

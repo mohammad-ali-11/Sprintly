@@ -19,10 +19,11 @@ import FormModal from "../FormModal/FormModal";
 
 type props = Pick<ComponentProps<typeof FormModal>, "modalRef"> & {
   listIndex?: number;
+  defaultValues?:Partial<values>
 };
 type values = Omit<ListType, "id" | "items">;
 
-export default function ListModal({ modalRef, listIndex }: props): ReactNode {
+export default function ListModal({ defaultValues,modalRef, listIndex }: props): ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
 
   const { dispatchList } = use(BoardContext);
@@ -46,17 +47,15 @@ export default function ListModal({ modalRef, listIndex }: props): ReactNode {
     if (!validateTitel(values.title)) {
       return;
     }
-    const id = globalThis.crypto.randomUUID();
-    // const title = formData.get("title") as string;
-
-    // if (!title || title.trim() === "") {
-    //   toast.error("لطفاً عنوان را وارد کنید!");
-    //   return;
-    // }
+    if (listIndex!==undefined) {
+    dispatchList({ type: "list-edited", listIndex,list:values});
+    toast.success("list edited succsess");
+    }else{
+      const id = globalThis.crypto.randomUUID();
     dispatchList({ type: "list-created", list: { id, items: [], ...values } });
-    console.log(formData, "s");
-
     toast.success("list Create succsess");
+    }
+    
     formRef.current?.reset();
     modalRef.current?.close();
   };
@@ -72,7 +71,7 @@ export default function ListModal({ modalRef, listIndex }: props): ReactNode {
     <FormModal
       // onReset={handleFormReset}
       modalRef={modalRef}
-      heading="create new list"
+      heading={listIndex !==undefined?'Edit Existing List':"create new list"}
       onSubmit={handelFormSubmit}
       extraActions={
         listIndex!==undefined&&(
@@ -87,7 +86,7 @@ export default function ListModal({ modalRef, listIndex }: props): ReactNode {
         )
       }
     >
-      <TextInput label="titel" name="title" type="text" />
+      <TextInput label="titel" name="title" defaultValue={defaultValues?.title} type="text" />
     </FormModal>
   );
 }

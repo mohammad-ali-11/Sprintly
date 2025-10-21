@@ -11,15 +11,16 @@ import styles from "./ListHeader.module.css";
 import ListItemModal from "@/modals/ListItemModal/ListItemModal";
 import ListModal from "@/modals/ListModal/ListModal";
 import MingcuteEdit2Line from "@/icons/MingcuteEdit2Line";
+import type { ListType } from "@/types/list";
 
 type props = {
-  title: string;
+  list: ListType;
   listIndex: number;
   listeners?: SyntheticListenerMap;
 };
 export default function ListHeader({
   listeners,
-  title,
+  list,
   listIndex,
 }: props): ReactNode {
   const listItemModalRef=useRef<HTMLDialogElement>(null)
@@ -37,7 +38,7 @@ export default function ListHeader({
     <div className={styles["list-header"]}>
       <div className={styles["darg-handler"]} {...listeners}>
         <MingcuteDotsLine />
-        <div className={styles.title}>{title}</div>
+        <div className={styles.title}>{list.title}</div>
       </div>
       <div className={styles.actions}>
         <IconButton onClick={handleRemoveListButtonClick}>
@@ -48,7 +49,7 @@ export default function ListHeader({
         </IconButton>
         
       </div>
-      <ListModal modalRef={listModalRef} listIndex={listIndex}></ListModal>
+      <ListModal modalRef={listModalRef} listIndex={listIndex} defaultValues={list}></ListModal>
       <ListItemModal modalRef={listItemModalRef} listIndex={listIndex} />
     </div>
   );
