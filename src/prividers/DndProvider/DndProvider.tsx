@@ -10,10 +10,10 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 
-import { BoardContext } from "@/contect/board-context";
-
 import ListItem from "@/components/ListItem/ListItem";
 import List from "@/components/list/list";
+
+import { BoardContext } from "@/context/board-context";
 
 import type { DraggableData } from "@/types/draggable-data";
 

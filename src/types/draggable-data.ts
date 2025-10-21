@@ -2,7 +2,7 @@ import type { ListType } from "./list";
 import type { ListItemType } from "./list.item";
 
 type ListDraggable = {
-  isList: false;
+  isList: true;
   listIndex: number;
   list: ListType;
 };

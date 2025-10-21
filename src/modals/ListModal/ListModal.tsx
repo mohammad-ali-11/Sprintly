@@ -8,7 +8,6 @@ import {
 
 import { toast } from "react-toastify";
 
-import { BoardContext } from "@/contect/board-context";
 
 import Button from "@/components/Button/Button";
 import TextInput from "@/components/TextInput/TextInput";
@@ -16,6 +15,7 @@ import TextInput from "@/components/TextInput/TextInput";
 import type { ListType } from "@/types/list";
 
 import FormModal from "../FormModal/FormModal";
+import { BoardContext } from "@/context/board-context";
 
 type props = Pick<ComponentProps<typeof FormModal>, "modalRef"> & {
   listIndex?: number;

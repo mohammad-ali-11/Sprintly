@@ -2,11 +2,11 @@ import { type ReactNode, use } from "react";
 
 import { SortableContext } from "@dnd-kit/sortable";
 
-import { BoardContext } from "@/contect/board-context";
 
 import List from "@/components/list/list";
 
 import styles from "./BoardLists.module.css";
+import { BoardContext } from "@/context/board-context";
 
 export default function BoardLists(): ReactNode {
   const { list } = use(BoardContext);

@@ -1,20 +1,11 @@
 import {
   type ComponentProps,
-  type FormEvent,
   type ReactNode,
   type RefObject,
-  use,
   useRef,
 } from "react";
 
-import { toast } from "react-toastify";
-
-import clsx from "clsx";
-
-import { BoardContext } from "@/contect/board-context";
-
 import Button from "@/components/Button/Button";
-import TextInput from "@/components/TextInput/TextInput";
 
 import Modal from "../Modal/Modal";
 

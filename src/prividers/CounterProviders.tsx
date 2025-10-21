@@ -1,6 +1,6 @@
+import { CounterContext } from "@/context/counter-context";
 import { type PropsWithChildren, type ReactNode, useState } from "react";
 
-import { CounterContext } from "@/contect/counter-context";
 
 type props = PropsWithChildren;
 export default function CounterProviders({ children }: props): ReactNode {

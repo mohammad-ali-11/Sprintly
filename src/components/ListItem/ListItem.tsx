@@ -1,4 +1,4 @@
-import { type MouseEvent, type ReactNode, use, useRef } from "react";
+import { type MouseEvent, type ReactNode, use } from "react";
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -7,8 +7,6 @@ import { toast } from "react-toastify";
 
 import clsx from "clsx";
 
-import { BoardContext } from "@/contect/board-context";
-
 import MingcuteDelete2Line from "@/icons/MingcuteDelete2Line";
 
 import type { ListItemType } from "@/types/list.item";
@@ -16,6 +14,7 @@ import type { ListItemType } from "@/types/list.item";
 import IconButton from "../IconButton/IconButton";
 
 import styles from "./ListItem.module.css";
+import { BoardContext } from "@/context/board-context";
 
 type props = {
   pressentational?: boolean;
