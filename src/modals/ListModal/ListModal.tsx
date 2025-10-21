@@ -10,17 +10,31 @@ import { toast } from "react-toastify";
 
 import { BoardContext } from "@/contect/board-context";
 
+import Button from "@/components/Button/Button";
 import TextInput from "@/components/TextInput/TextInput";
 
 import type { ListType } from "@/types/list";
 
 import FormModal from "../FormModal/FormModal";
 
-type props = Pick<ComponentProps<typeof FormModal>, "modalRef"> & {};
+type props = Pick<ComponentProps<typeof FormModal>, "modalRef"> & {
+  listIndex?: number;
+};
 type values = Omit<ListType, "id" | "items">;
-export default function ListModal({ modalRef }: props): ReactNode {
+
+export default function ListModal({ modalRef, listIndex }: props): ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
+
   const { dispatchList } = use(BoardContext);
+
+  const handleRemoveButtonClick = (): void => {
+    if (listIndex===undefined) {
+      return
+    }
+    dispatchList({ type: "list-remove", listIndex });
+    toast.success("list Remove succsess");
+    modalRef.current?.close();
+  };
 
   const handelFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -28,7 +42,7 @@ export default function ListModal({ modalRef }: props): ReactNode {
     const values: values = {
       title: formData.get("title") as string,
     };
-    console.log(values, "d");
+   
     if (!validateTitel(values.title)) {
       return;
     }
@@ -46,11 +60,12 @@ export default function ListModal({ modalRef }: props): ReactNode {
     formRef.current?.reset();
     modalRef.current?.close();
   };
+
   const validateTitel = (title: string): boolean => {
     if (title.length === 0) {
       return false;
     }
-     return true;
+    return true;
   };
 
   return (
@@ -59,6 +74,18 @@ export default function ListModal({ modalRef }: props): ReactNode {
       modalRef={modalRef}
       heading="create new list"
       onSubmit={handelFormSubmit}
+      extraActions={
+        listIndex!==undefined&&(
+          <Button
+          type="button"
+          variant="text"
+          color="danger"
+          onClick={handleRemoveButtonClick}
+        >
+          Remove
+        </Button>
+        )
+      }
     >
       <TextInput label="titel" name="title" type="text" />
     </FormModal>

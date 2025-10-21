@@ -10,6 +10,10 @@ export type ListAction =
       type: "list-created";
       list: ListType;
     }
+    | {
+      type: "list-remove";
+      listIndex: number;
+    }
   | {
       type: "list-dragged-end";
       activeListIndex: number;
@@ -48,11 +52,15 @@ export default function ListReducer(
       draft.push(action.list)
       return;
     }
+    case "list-remove": {
+      draft.splice(action.listIndex,1)
+      return;
+    }
     case "item-dragged-end": {
       const { activeItemIndex, activeListIndex, overItemIndex } = action;
       if (activeItemIndex === overItemIndex) {
         return;
-      }
+      } 
       const activeList = draft[activeListIndex];
       activeList.items = arrayMove(
         activeList.items,

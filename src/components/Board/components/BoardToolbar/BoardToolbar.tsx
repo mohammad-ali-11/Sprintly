@@ -9,10 +9,13 @@ import styles from "./BoardToolbar.module.css";
 import ListModal from "@/modals/ListModal/ListModal";
 
 export default function BoardToolbar(): ReactNode {
+  
   const modalRef=useRef<HTMLDialogElement>(null)
+
   const handleCreateListButtonClick=():void=>{
     modalRef.current?.showModal()
   }
+
   return (
     <div className={styles["board-toolbar"]}>
       <div className={styles.title}>titel</div>
@@ -24,7 +27,7 @@ export default function BoardToolbar(): ReactNode {
           <MingcuteAddLine />
         </IconButton>
       </div>
-      <ListModal modalRef={modalRef}/>
+      <ListModal modalRef={modalRef} />
     </div>
   );
 }
